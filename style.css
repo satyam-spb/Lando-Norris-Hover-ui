@@ -1,0 +1,149 @@
+/* THEME VARIABLES (Users can override these anywhere) */
+:root {
+  --norris-font: "Poppins", sans-serif;
+
+  --norris-base-color: #f7f7f7;
+  --norris-hover-color: #ead196;
+  --norris-press-color: #f7e3b0;
+
+  --norris-duration: 0.45s;
+  --norris-stagger: 0.035s;
+  --norris-scale-hover: 1.04;
+  --norris-scale-press: 0.92;
+
+  --norris-letter-spacing: normal;
+}
+
+/* BASE STYLES */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--norris-font);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: var(--norris-base-color);
+
+  background: radial-gradient(circle at center, #1c1c1c 0%, #0d0d0d 100%),
+    url("https://grainy-gradients.vercel.app/noise.svg");
+  background-size: cover;
+}
+
+/* layout */
+header,
+footer {
+  display: flex;
+  justify-content: center;
+}
+nav,
+footer {
+  display: flex;
+  gap: 2.7rem;
+  padding: 2rem;
+}
+.hero {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* re-usable component */
+.norris-hover {
+  display: inline-flex;
+  overflow: hidden;
+  font-size: clamp(1rem, 3vw, 2rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--norris-base-color);
+  letter-spacing: var(--norris-letter-spacing);
+  transition: transform var(--norris-duration) ease,
+    color var(--norris-duration) ease;
+  position: relative;
+}
+
+.norris-hover:hover {
+  transform: scale(var(--norris-scale-hover));
+  color: var(--norris-hover-color);
+}
+
+.norris-hover.pressed {
+  transform: scale(var(--norris-scale-press));
+  color: var(--norris-press-color);
+}
+
+/* character animation */
+.letter {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  height: 1em;
+}
+
+.letter span {
+  display: inline-block;
+  transition: transform var(--norris-duration) cubic-bezier(0.19, 1, 0.22, 1);
+  transition-delay: calc(var(--i) * var(--norris-stagger));
+}
+
+.top {
+  transform: translateY(0%);
+}
+.bottom {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translateY(100%);
+}
+
+.norris-hover:hover .top {
+  transform: translateY(-100%);
+}
+.norris-hover:hover .bottom {
+  transform: translateY(0%);
+}
+
+.space {
+  width: 0.45em;
+  pointer-events: none;
+}
+
+/* HERO TITLE */
+.hero-title {
+  font-size: clamp(2.5rem, 10vw, 4.5rem);
+  margin-bottom: 1.5rem;
+
+  /* faster effect for long text */
+  --norris-stagger: 0.03s;
+  --norris-duration: 0.35s;
+}
+
+/* CTA BUTTON */
+.cta {
+  background: transparent;
+  border: 2px solid var(--norris-hover-color);
+  padding: 1rem 2.8rem;
+  border-radius: 8px;
+  font-size: clamp(1rem, 3vw, 2rem);
+}
+
+.cta {
+  margin-top: 1.5rem; /* instead of 2.2rem */
+}
+
+/* RESPONSIVE LAYOUT */
+@media (max-width: 600px) {
+  nav,
+  footer {
+    flex-wrap: wrap;
+    gap: 1.2rem;
+  }
+}
